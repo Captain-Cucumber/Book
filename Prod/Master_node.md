@@ -47,7 +47,7 @@
 
 
 
-### Настрой SSH на сервере
+### Настройка SSH на сервере
 
 После того как вы залогинились на сервере через bitvise открываем окно bitvise sftp
 в части окна, где находятся удаленные файлы, переходим в папку `/root/.ssh`,
@@ -85,3 +85,47 @@
 - Passphrase: <если не вводили пасфразу при создании ключей оставляем это поле пустым>
 
 После этого пытаемся залогиниться
+
+### Создание нового юзера
+
+	adduser <username>
+
+Вводим пароль пользователя:
+
+	Set password prompts:
+	Enter new UNIX password:
+	Retype new UNIX password:
+	passwd: password updated successfully
+
+Следуем инструкциям системы, чтобы указать дополнительную информацию о пользователе. Можно оставить значения по умолчанию:
+
+	User information prompts:
+	Changing the user information for username
+	Enter the new value, or press ENTER for the default
+	Full Name []:
+	Room Number []:
+	Work Phone []:
+	Home Phone []:
+	Other []:
+	Is the information correct? [Y/n]
+
+Используем команду `usermod`, чтобы добавить пользователя в группу sudo:
+
+	usermod -aG sudo username
+
+*В системе Ubuntu все пользователи, состоящие в группе sudo, по умолчанию имеют права sudo.*
+
+Переходим в сессию нового системного пользователя:
+
+	su - username
+
+Пробуем запустить любую команду, добавив перед ней sudo.
+К примеру, чтобы просмотреть содержимое каталога /root, нужно выполнить:
+
+	sudo ls -la /root
+
+Дополнительно см. [тут](https://www.8host.com/blog/sozdanie-polzovatelya-sudo-v-ubuntu/)
+
+### Настройка SSH на сервере для user'a
+
+
