@@ -14,9 +14,9 @@
 Настройка системы и окружения
 -----------------------------
 
-!Сменить дефолтный пароль для root *пароль root должен содержать от 8 символов с цифрами, буквами разного регистра и символами*
+!Сменить дефолтный пароль для root *(пароль root должен содержать от 8 символов с цифрами, буквами разного регистра и символами)*
 
-Обновляем систему
+Обновляем систему *(от лица root-пользователя)*:
 
 	sudo apt-get update
 	sudo apt-get upgrade
@@ -25,14 +25,12 @@
 
 	sudo apt-get install htop mc pydf
 
-### Подключение к серверу через Bitvise
-
-*[Bitvise тут](https://www.youtube.com/redirect?v=_ti-d5t1WX8&event=video_description&redir_token=Fb0zYWgHWbS7dkGtIwXEbcoKo1R8MTUxODkzMDkyMUAxNTE4ODQ0NTIx&q=https%3A%2F%2Fwww.bitvise.com%2F)*
+### Подключение к серверу через SSH-клиент [Bitvise](https://www.youtube.com/redirect?v=_ti-d5t1WX8&event=video_description&redir_token=Fb0zYWgHWbS7dkGtIwXEbcoKo1R8MTUxODkzMDkyMUAxNTE4ODQ0NTIx&q=https%3A%2F%2Fwww.bitvise.com%2F)
 
 После установки вводим в Bitvise следующие настройки:
 
 - Host: <ip вашего сервера>
-- Port: 22 *это SSH-порт по умолчанию*
+- Port: 22 *(это SSH-порт по умолчанию)*
 - Username: root
 - Initial method: password
 - Password: <Ваш пароль от root>
@@ -57,9 +55,7 @@
 
 ### Настройка SSH на сервере
 
-После логина на сервере открываем окно `Bitvise sftp`.
-В той части окна, где находятся удалённые файлы, переходим в папку `/root/.ssh`,
-тут должен быть файл `authorized_keys`. Открываем его при помощи блокнота.
+После логина на сервере открываем окно `Bitvise sftp`. В той части окна, где находятся удалённые файлы, переходим в папку `/root/.ssh`, тут должен быть файл `authorized_keys`. Открываем его при помощи блокнота.
 
 Далее открываем (так же в блокноте) ранее экспортированный публичный ключ SSH и копируем его содержимое в открытый файл `authorized_keys`.
 
@@ -91,7 +87,7 @@
 - Username: root
 - Initial method: publickey
 - Client key: <выбираем созданые нами ключи>
-- Passphrase: <если не вводили пассфразу при создании ключей - оставляем это поле пустым>
+- Passphrase: <если не вводили парольную фразу при создании ключей - оставляем это поле пустым>
 
 После этого логинимся
 
@@ -130,38 +126,38 @@
 	su - <username>
 
 Пробуем запустить любую команду, добавив перед ней sudo.
-К примеру, чтобы просмотреть содержимое каталога /root, нужно выполнить:
+К примеру, чтобы просмотреть содержимое каталога `/root`, нужно выполнить:
 
 	sudo ls -la /root
 
-Дополнительно см. [тут](https://www.8host.com/blog/sozdanie-polzovatelya-sudo-v-ubuntu/)
+Дополнительно см. [здесь](https://www.8host.com/blog/sozdanie-polzovatelya-sudo-v-ubuntu/)
 
-### Настройка SSH на сервере для user'a
+### Настройка SSH для user'a на сервере
 
-В домашней дирректории пользователя создаем папку `.ssh`
+В домашней дирректории пользователя создаем скрытую папку `.ssh`:
 
 	cd /home/<username>
 	mkdir .ssh
 
-В нутри папки `.ssh` создаем файл `authorized_keys`
+Внутри папки `.ssh` создаем файл `authorized_keys`:
 
 	cd .ssh
 	touch authorized_keys
 
-На основной машине открываем bitvise и создаем новый профиль.
+На основной машине открываем Bitvise и создаем новый профиль:
 
 - Host: <ip вашего сервера>
-- Port: 88 *тот порт который мы указали в `sshd_config`*
+- Port: 88 *(тот порт который мы указали в `sshd_config`)*
 - Username: <username>
 - Initial method: publickey
 - Client key: <созадаем новую пару ключей SSH как описано выше>
 - Passphrase: <если не вводили пасфразу при создании ключей оставляем это поле пустым>
 
-Возвращаемся в окно bitvise sftp, в части окна, где находятся удаленные файлы, переходим в папку `/home/<username>/.ssh`, открываем файл `authorized_keys` при помощи блокнота.
+Возвращаемся в окно `bitvise sftp`, в части окна, где находятся удалённые файлы, переходим в папку `/home/<username>/.ssh`, открываем файл `authorized_keys` при помощи блокнота.
 
-Открываем ранее экспортированный публичный ключ SSH для usera, тоже через блокнот и копируем его содержимое в открытый файл `authorized_keys`.
+Открываем ранее экспортированный публичный ключ SSH для user'a, (так же через блокнот) и копируем его содержимое в открытый файл `authorized_keys`.
 
-И после этого пытаемся залогинится 
+И после этого пытаемся залогинится
 
 Компиляция демона монеты
 ------------------------
@@ -182,7 +178,7 @@
 
 ### Клонируем исходники
 
-В домашнюю дирректорию user'a клонируем исходники монеты
+В домашнюю дирректорию user'a клонируем исходники монеты:
 
 	git clone https://github.com/<yourrepo>/<yourcoin>.git
 
@@ -194,12 +190,12 @@
 Запуск и настройка демона
 -------------------------
 
-В папке `<yourcoin>/src` запускаем файл `<yourcoin>d`
+В папке `<yourcoin>/src` запускаем файл `<yourcoin>d`:
 
 	cd /home/<username>/<yourcoin>/src
 	./<yourcoin>d
 
-Далее переходим в папку `/home/<username>/.<yourcoin>` создаем файл `<yourcoin>.conf` и открываем его
+Далее переходим в папку `/home/<username>/.<yourcoin>` создаем файл `<yourcoin>.conf` и открываем его:
 
 	cd /home/<username>/.<yourcoin>
 	touch <yourcoin>.conf
@@ -211,7 +207,7 @@
 	rpcuser=<username>
 	rpcpassword=<password>
 
-После этого перезапускаем демона
+После этого перезапускаем демона:
 
 	cd /home/<username>/<yourcoin>/src
 	./<yourcoin>d -stop
