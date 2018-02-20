@@ -1,11 +1,17 @@
-Компиляция кошелька под windows-x32
--------------------------------
+Компиляция кошелька под Windows (x32)
+-------------------------------------
 
 ### Установка VM
 
 [Скачиваем образ Debian 8.5.0 х64](https://www.youtube.com/redirect?v=_ti-d5t1WX8&event=video_description&redir_token=Fb0zYWgHWbS7dkGtIwXEbcoKo1R8MTUxODkzMDkyMUAxNTE4ODQ0NTIx&q=https%3A%2F%2Fcdimage.debian.org%2Fmirror%2Fcdimage%2Farchive%2F8.5.0-live%2Famd64%2Fiso-hybrid%2Fdebian-live-8.5.0-amd64-standard.iso)
 
-Минимальные системные требования:
+Минимальные системные требования *физической машины*:
+
+- ОЗУ: не менее ?? Гб
+- Жёсткий диск: не менее ?? Гб
+- Процессор: не менее ?? ядра (количество ядер процессора влияет на скорость компиляции) 
+
+Минимальные системные требования *виртуальной машины*:
 
 - ОЗУ: не менее 2 Гб
 - Жёсткий диск: не менее 40 Гб
@@ -13,24 +19,27 @@
 
 Необходимо выполнить настройки сети:
 
-В настройках сети открываем вкладку дополнительно => проброс портов
+В настройках сети открываем вкладку `Дополнительно (Addition)` => `Проброс портов (Port forwarding)`
 
-Создаем новое правило:
+Создаём новое правило:
 
-- Имя: SSH
+- Имя: `SSH`
 
-- Протокол: TCP
+- Протокол: `TCP`
 
-- Порт хоста: 22222
+- Порт хоста: `22222`
 
-- Порт гостя: 22
+- Порт гостя: `22`
 
-При утановки пароль root: `password` имя пользователя: `debian` пароль: `debianpassword`
+При создании виртуальной машины указываем:
+- пароль root: `password`
+- имя пользователя: `debian`
+- пароль: `debianpassword`
 
 После установки логинимcя под root
 
 ВНИМАНИЕ! Не нужно обновлять систему!
-*Можно установить htop, mc*
+*можно установить htop, mc*
 
 Даем право логинится как root через SSH:
 
@@ -39,13 +48,13 @@
 
 В основной системе устанавливаем [Bitvise](https://www.youtube.com/redirect?v=_ti-d5t1WX8&event=video_description&redir_token=Fb0zYWgHWbS7dkGtIwXEbcoKo1R8MTUxODkzMDkyMUAxNTE4ODQ0NTIx&q=https%3A%2F%2Fwww.bitvise.com%2F)
 
-В bitvise:
+В Bitvise задаём следующие параметры:
 
-- Host: localhost
-- Port: 22222
-- Username: root
-- Initial method: password
-- Password: password
+- Host: `localhost`
+- Port: `22222`
+- Username: `root`
+- Initial method: `password`
+- Password: `password`
 
 Далее сохраняем профиль и логинимся
 
@@ -67,7 +76,7 @@
 	echo 'export LXC_GUEST_IP=10.0.3.5' >> /home/debian/.profile
 	reboot
 
-Далее в bitvise изменяем имя пользователя на `debian` и вводим пароль `debianpassword` и заново логинимся
+Далее в Bitvise изменяем имя пользователя на `debian` и вводим пароль `debianpassword` и заново логинимся
 
 В открывшемся терминале вводим следующие команды:
 
@@ -79,7 +88,7 @@
 	sudo python setup.py install
 	cd ..
 
-Клонируем gitian-builder в домашнюю директорию
+Клонируем `gitian-builder` в домашнюю директорию:
 
 	git clone https://github.com/devrandom/gitian-builder.git
 
@@ -87,13 +96,13 @@
 
 	git clone https://github.com/<yourrepo>/<yourcoin>.git
 
-*[Как создать свой репозиторий на github](Команды_git.md)*
+*Что, сложна, блеать? Тогда читаем [как создать свой репозиторий на github](Команды_git.md)*
 
-### Сборка базавой VM
+### Собираем базовую VM
 
 	bin/make-base-vm --lxc --arch amd64 --suite precise
 
-### Подтягиваем завимости
+### Устанавливаем зависимости
 
 	mkdir -p inputs; cd inputs/
 	wget 'http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.9.20140401.tar.gz' -O 'miniupnpc-1.9.20140401.tar.gz'
@@ -106,7 +115,7 @@
 	wget 'https://download.qt.io/archive/qt/4.8/4.8.5/qt-everywhere-opensource-src-4.8.5.tar.gz'
 	wget 'https://svn.boost.org/trac/boost/raw-attachment/ticket/7262/boost-mingw.patch' -O boost-mingw-gas-cross-compile-2013-03-03.patch
 
-### Сборка зависимостей
+### Собираем зависимости
 
 	./bin/gbuild ../<yourcoin>/contrib/gitian-descriptors/boost-win32.yml
 	mv build/out/boost-*.zip inputs/
@@ -117,7 +126,7 @@
 	./bin/gbuild ../<yourcoin>/contrib/gitian-descriptors/qt-win32.yml
 	mv build/out/qt*.zip inputs/
 
-### Компилируем твою монету
+### Компилируем монету
 
 	./bin/gbuild --commit <yourcoin>=v<tag_version> ../<yourcoin>/contrib/gitian-descriptors/gitian-win32.yml
 
