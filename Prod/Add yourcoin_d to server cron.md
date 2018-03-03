@@ -7,7 +7,7 @@
 
 ### Подключаемся к нашей мастер ноде с помощью SSH как User
 
-[См. Addiction_masternode.md](Addiction_masternode.md)
+[См. Подключение к серверу через SSH-клиент Bitvise](Addiction_masternode.md#Подключение-к-серверу-через-ssh-клиент-bitvise)
 
 ### Добавляем задание в Crontab
 
