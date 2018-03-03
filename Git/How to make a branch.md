@@ -1,94 +1,65 @@
+В локальном репозитории имеется файл index.md
 
-на машине
----------
+**Копия репозитория**
 
-Cрздаём пустой репозиторий и файл `index.md` в нем
+### Cоздание ветки dev
 
-копирую машину
+    git branch dev
 
+Переключение на нее
 
-на копии 
---------
+    git checkout dev
 
-
-### создание ветки dev:
-
-    `git branch dev`
-    
-переключение на нее
-    
-    `git checkout dev`
-    
 Публикуем ее на github:
 
-    `git push origin dev`
+    git push origin dev
 
 
-### ветка master
+**Основной репозиторий (мастер ветка)**
 
 произвожу изменение файла index.md
+коммитчу и пушу на github
 
-создаём коммит и push на github
+**Копия репозитория**
 
+Создаю ветку slave, так же произвожу изменение файла в ней коммитчу
 
-на копии 
+После коммита надо влить в нашу ветку изменения из ветки dev и master:
 
+    git pull origin dev 
+    git pull origin master
 
-### ветка slave 
+Если возникла проблема слияния веток так как файл index.md изменен в 2-х ветках:
 
-так же производим изменение файла в ней | создаём коммит
+    CONFLICT (content): Merge conflict in index.md
+    Automatic merge failed; fix conflict and then commit the result
 
-После коммита надо влить в нашу ветку изменения из ветки `dev` и `master`:
+Чтобы решить такой конфликт, надо просто выбрать — какая версия файла будет использоваться: ваша или из вливаемой ветки. Чтобы использовать свой вариант файла, вводим команду:
 
-    `git pull origin dev`
-    `git pull origin master`
+    git checkout --ours index.md
+    git add index.md
 
+Если мы выбираем версию из вливаемой ветки:
 
-возникла проблема слития веток так как файл index.md изменен в 2-х ветках
-CONFLICT (content): Merge conflict in index.md
-Automatic merge failed; fix conflict and then commit the result
-
-Чтобы решить такой конфликт, нужно выбрать — какая версия файла будет использоваться: ваша или из вливаемой ветки. 
-Чтобы использовать *свой вариант файла* пишем:
-
-    `git checkout --ours index.md`
-    `git add index.md`
-
-
-
-Выбор версии из вливаемой ветки:
---------------------------------
-
-    `git checkout --theirs index.md`
-    `git add index.md`
+    git checkout --theirs index.md
+    git add index.md
 
 далее коммитим и пушим на нашу ветку:
 
-    `git push origin slave`
+    git push origin slave
 
+**Копия репозитория**
 
+Создаем файлы с именем ветки на машинах работающих с данными ветками:
 
-Создаём файлы с именем ветки на машинах, работающих с данными ветками:
+    touch ./slave.txt 
+    touch ./dev.txt 
 
-    `touch ./slave.txt` 
-    `touch ./dev.txt`
+Делаем коммит и пушим на github
 
-Делаем `push` в соответствующие ветки:
+**Основной репозиторий (мастер ветка)**
+Делаем pull в соответствующие ветки
 
-на машине **master**:
-
-    `git pull origin dev`
-    
-на машине **slave**:
-
-    `git pull origin slave`
-
-контрольная проверка состояния гита:
-
-`git status`
- 
- 
- 
-Если мердж не прошел коммитим и пушим на гитхаб
-
-
+    git pull origin dev
+    git pull origin slave
+    git status
