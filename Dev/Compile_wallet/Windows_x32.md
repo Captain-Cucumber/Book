@@ -61,6 +61,9 @@
 В открывшемся терминале вводим следующие команды:
 
 	apt-get install git ruby sudo apt-cacher-ng qemu-utils debootstrap lxc python-cheetah parted kpartx bridge-utils make ubuntu-archive-keyring curl
+
+	sudo apt-get install zip unzip
+
 	adduser debian sudo
 
 	echo "%sudo ALL=NOPASSWD: /usr/bin/lxc-start" > /etc/sudoers.d/gitian-lxc
@@ -130,6 +133,14 @@
 
 	./bin/gbuild --commit <yourcoin>=v<tag_version> ../<yourcoin>/contrib/gitian-descriptors/gitian-win32.yml
 
-После успешной компиляции, переходим в директорию `~/gitian-builder/build/out` и копируем содержимое папки в основную систему
+После успешной компиляции:
+
+	pushd build/out
+	zip -r <yourcoin>-${VERSION}-linux.zip *
+	mv <yourcoin>-${VERSION}-linux.zip ../../
+	popd
+
+и копируем архив `<yourcoin>-${VERSION}-linux.zip` в основную систему
+
 
 Пробуем запустить файл `<yourcoin>-qt.exe`
