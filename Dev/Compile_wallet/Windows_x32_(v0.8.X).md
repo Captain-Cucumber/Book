@@ -98,11 +98,15 @@
 Так же поступаем с <yourcoin>
 
 	git clone https://github.com/<yourrepo>/<yourcoin>.git
+	cd testcoin
+	git checkout 0.8
+	cd ..
 
 *Что, сложна, блеать? Тогда читаем [как создать свой репозиторий на github](Команды_git.md)*
 
 ### Собираем базовую VM
 
+	cd gitian-builder
 	bin/make-base-vm --lxc --arch amd64 --suite precise
 
 ### Устанавливаем зависимости

@@ -100,11 +100,43 @@
 	git checkout v0.10.4
 	cd ..
 
-*Что, сложна, блеать? Тогда читаем [как создать свой репозиторий на github](Команды_git.md)*
+*Что, сложна, блеать? Тогда читаем [как создать свой репозиторий на github](../../Git/Git_commands.md)*
 
 ### Собираем базовую VM
 
+	cd gitian-builder
 	bin/make-base-vm --lxc --arch amd64 --suite precise
 
 ### Устанавливаем зависимости
 
+	mkdir -p inputs; cd inputs
+	wget 'http://miniupnp.free.fr/files/download.php?file=miniupnpc-1.6.tar.gz' -O miniupnpc-1.6.tar.gz
+	wget 'http://www.openssl.org/source/openssl-1.0.1c.tar.gz'
+	wget 'http://zlib.net/zlib-1.2.6.tar.gz'
+	wget 'ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng-1.5.9.tar.gz'
+	wget 'http://fukuchi.org/works/qrencode/qrencode-3.2.0.tar.bz2'
+	wget 'http://downloads.sourceforge.net/project/boost/boost/1.50.0/boost_1_50_0.tar.bz2'
+	wget 'http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-4.8.3.tar.gz'
+	cd ..
+
+	make -C ../testcoin/depends download SOURCES_PATH=pwd/cache/common
+
+*При вываливании make с ошибками 404 и т.д. Архивы необходимо подгрузить ручками(с помощью wget) в папку `gitian-builders/cache/common`* ***Версии архивов должны быть такие же как укакзано в выводе консоли*** *После загрузки "потерянного" архива, повторяем команду `make -C ...`*
+
+Пока mаke не завершится без ошибок не идти дальше!
+
+### Компилируем монету
+
+	./bin/gbuild --commit <yourcoin>=v<tag_version> ../<yourcoin>/contrib/gitian-descriptors/gitian-win.yml
+
+После успешной компиляции:
+
+	pushd build/out
+	zip -r <yourcoin>-${VERSION}-linux.zip *
+	mv <yourcoin>-${VERSION}-linux.zip ../../
+	popd
+
+и копируем архив `<yourcoin>-${VERSION}-linux.zip` в основную систему
+
+
+Пробуем запустить файл `<yourcoin>-qt.exe`
