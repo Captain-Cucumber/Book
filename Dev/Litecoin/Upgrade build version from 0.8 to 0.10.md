@@ -159,3 +159,4 @@ scriptPubKey перехал в `chainparams.cpp` из `main.cpp` строка `2
 В файле `src\amount.h`
 
 MAX_MONEY - максимальное колличество монет
+
