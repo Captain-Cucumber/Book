@@ -86,6 +86,10 @@ https://www.youtube.com/watch?v=mDGxGYvkDEE
 	find . -type f -print0 | xargs -0 sed -i 's/LTC/<YOUR>/g'
 *Например <yourcoin> = testcoin <YOUR> = TST*
 
+Волшебная команда! Позволит не переименовывать файлы в ручную.
+
+	find * -name '*litecoin*' | sed 'p;s:litecoin:<yourcoin>:g' | xargs -n2 mv
+
 Делаем пробную компиляцию:
 
 	cd src
