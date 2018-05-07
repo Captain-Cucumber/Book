@@ -2,9 +2,8 @@
 =========
 
 
-
-UTXO (Unspent Transaction Output)
----------------------------------
+*UTXO (Unspent Transaction Output)*
+-----------------------------------
 
 ### Определение
 
@@ -16,8 +15,8 @@ UTXO (Unspent Transaction Output)
 - [How big is the UTXO database?](http://bitcoin.stackexchange.com/q/35980) — Bitcoin StackExchange
 
 
-Input, Transaction Input, TxIn
-------------------------------
+*Input, Transaction Input, TxIn*
+--------------------------------
 
 ### Определение
 
